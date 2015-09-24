@@ -1,1 +1,0 @@
-# Raspberry_Pi_2_and_OpenCV_3_Tutorial_Part_1

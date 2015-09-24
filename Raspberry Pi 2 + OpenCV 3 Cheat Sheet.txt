@@ -1,0 +1,263 @@
+# making the Raspbian SD card ###################################################################
+
+download latest version of Raspbian from www.raspberrypi.org
+
+download Win32DiskImager (either follow the link from this page on the Raspberry Pi official site "https://www.raspberrypi.org/documentation/installation/installing-images/windows.md" or Google "win32 disk imager sourceforge")
+
+flash Raspbian to the SD card, when flashing is complete before removing the SD card, make sure to right-click on the SD card drive letter and choose "Eject", then remove the SD card
+
+# first time boot-up ############################################################################
+
+insert the flashed SD card into the RPi, then connect:
+-USB keyboard
+-USB mouse
+-USB wireless adapter
+-webcam
+-HDMI monitor cable
+-power (connect power last)
+
+raspi-config option 1 - set OS to fill SD card
+raspi-config option 4 - set U.S. keyboard
+
+log in with the default username / password, which is pi / raspberry
+
+startx           # start the graphical desktop
+
+choose wireless icon at the top right, enter wireless router password, verify networking works
+
+hostname -I      # write down IP address
+
+sudo shutdown -r now     # reboot, you don't need to log in on the RPi after rebotting
+
+# PuTTY and Xming ###############################################################################
+
+install PuTTY (http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html) and Xming and Xming-fonts (http://sourceforge.net/projects/xming), when installing Xming-fonts, choose to install all fonts, otherwise the defaults are ok, reboot after installing
+
+start PuTTY and set the following settings:
+-your RPi IP address
+-Terminal -> Bell -> None (bell disabled)
+-Connection -> Seconds between keepalives -> set to "30"
+-Connection -> expand SSH -> X11 -> check "Enable X11 forwarding"
+then save these settings by entering a preferred name in the "Saved Sessions" box, for example "my_default", then choosing Save
+
+to begin a PuTTY session, load your preferred settings and click "Open"
+
+start Xming before or just after beginning a PuTTY session if you would like to see Raspbian windows rendered on your Windows desktop computer, to verify Xming is running look for the Xming icon (black X with a red circle around it) in the "notification area" (aka "system tray") adjacent to the clock
+
+to verify PuTTY and Xming are working try the following commands
+
+pwd                      # present working directory, should say "/home/pi" as this is the default location for the user "pi"
+ls -l                    # lists the files in the current directory
+pcmanfm &                # this is the graphical Raspbian file browser and should open as a separate window
+epiphany-browser &       # this is the graphical default Raspbian internet browser, which can also be used to browse files, FTP, etc.
+
+to paste into a PuTTY window simply right-click anywhere in the PuTTY window, to copy from a PuTTY window simply highlight what you would like to copy (not necessary to press Ctrl+C)
+
+note that the "&" starts (in Linux parlance "forks") programs as a separate process from the command line session
+
+from this point on most of the cheat sheet is commands to be copied / pasted into a PuTTY session
+
+# verify webcam works ###########################################################################
+
+lsusb           # your webcam should be listed
+
+cd /dev         # cd to dev directory
+ls -l           # verify "video0" is listed, this is your webcam
+
+cd ~            # back to home directory
+
+sudo apt-get install fswebcam             # install program to take still images with your webcam
+
+fswebcam -r 640x480 --no-banner image.jpg       # take a still image with your webcam
+
+ls -l          # verify "image.jpg" is there
+
+pcmanfm &                         # double click on "image.jpg" to view
+epiphany-browser "image.jpg" &    # or you can view image.jpg in the Epiphany browser with this command
+
+sudo apt-get install luvcview       # install webcam stream viewer
+
+luvcview -s 320x240                 # test webcam
+
+# get a LED blinking #############################################################################
+
+breadboard "my_blink.png"
+
+cd ~                   # return to home directory if not there already
+
+touch my_blink.py      # create an empty file with the touch command
+
+# alternatively simply type the desired file name after nano (next line) and nano will create the file if it has not been created already
+
+nano my_blink.py       # open the file my_blink.py with the nano editor
+
+# copy / paste in my_blink.py from the GitHub site, then press Ctrl+O to save, then Ctrl+X to exit nano
+
+sudo python my_blink.py    # run the program with this command, note sudo "super user do", i.e. root access is necessary to perform hardware I/O on the RPi
+
+# you should now see the LED on your board blinking
+
+
+
+!!!!!!!!! put instructions here to set program to run at boot time !!!!!!!!!!!!!!!!!!!
+
+
+
+# using the Raspbian provided OpenCV pre-compiled binaries ##################################################
+
+Note: I do NOT recommend following the steps in this section, this is here for information/reference only.  The recommended procedure is to not perform the steps in this section and to continue to the next section to compile OpenCV 3.0.0 or later from source.
+
+Raspbian currently includes precompiled binaries, but they are substantially out of date.  At a RPi command line enter the following:
+
+dpkg -l | less
+
+This will list all installed packages.  Navigate to the opencv libs and you will see the version of the OpenCV libraries included with the current Raspbian build is 2.4.1, which was released in June of 2012.  It is not recommended to use such an old version of OpenCV, especially with Python since a major change in how OpenCV images are stored in Python was made in OpenCV 2.3 and these changes were still being completed as of OpenCV 2.4.1.
+
+If you are absolutely insistant on using the pre-compiled OpenCV binaries to avoid compiling from source, proceed as follows at the RPi command line (as mentioned above this is NOT recommended):
+
+sudo apt-get update
+sudo apt-get upgrade
+
+sudo apt-get install libopencv-dev python-opencv
+
+# verify the OpenCV install
+
+python
+>>> import cv2
+>>> cv2.__version__        # will say "2.4.1" if pre-compiled binary installation was successful
+
+Note that if you use these old pre-compilied binaries the OpenCV Python programs used in this tutorial will NOT work since they have been written for OpenCV 3.
+
+# OpenCV compile ###############################################################################################
+
+# this takes about 3.5 hours total on a RPi 2, the make command alone takes about 3 hours
+
+cd ~
+
+sudo apt-get update
+sudo apt-get upgrade
+
+sudo apt-get install python-numpy python-scipy python-matplotlib
+
+sudo apt-get install build-essential cmake pkg-config
+
+sudo apt-get install default-jdk ant
+
+sudo apt-get install libgtkglext1-dev
+
+sudo apt-get install v4l-utils
+
+sudo apt-get install libjpeg8 \
+libjpeg8-dev \
+libjpeg8-dbg \
+libjpeg-progs \
+ffmpeg \
+libavcodec-dev \
+libavcodec53 \
+libavformat53 \
+libavformat-dev \
+libgstreamer0.10-0-dbg \
+libgstreamer0.10-0 \
+libgstreamer0.10-dev \
+libxine1-ffmpeg \
+libxine-dev \
+libxine1-bin \
+libunicap2 \
+libunicap2-dev \
+swig \
+libv4l-0 \
+libv4l-dev \
+python-numpy \
+libpython2.7 \
+python-dev \
+python2.7-dev \
+libgtk2.0-dev \
+libtiff4-dev \
+libjasper-dev \
+libpng12-dev \
+libswscale-dev
+
+wget http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/3.0.0/opencv-3.0.0.zip
+
+unzip opencv-3.0.0.zip
+
+cd opencv-3.0.0
+
+mkdir build
+
+cd build
+
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+-D INSTALL_C_EXAMPLES=ON \
+-D INSTALL_PYTHON_EXAMPLES=ON \
+-D BUILD_EXAMPLES=ON \
+-D CMAKE_INSTALL_PREFIX=/usr/local \
+-D WITH_V4L=ON ..
+
+sudo make            # this takes about 3 hours on the RPi 2
+
+sudo make install
+
+sudo nano /etc/ld.so.conf.d/opencv.conf
+
+# opencv.conf will be blank, add the following line, then save and exit nano:
+
+/usr/local/lib          # enter this in opencv.conf, NOT at the command line
+(leave a blank line at the end of opencv.conf)
+
+# back to the command line
+
+sudo ldconfig
+
+sudo nano /etc/bash.bashrc
+
+# add the following lines at the bottom of bash.bashrc
+
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig       # enter these at the bottom of bash.bashrc, NOT at the command line
+export PKG_CONFIG_PATH                                          # enter these at the bottom of bash.bashrc, NOT at the command line
+(leave a blank line at the end of bash.bashrc)
+
+# save bash.bashrc changes, then back at the command line, reboot
+
+sudo shutdown -r now
+
+# after rebooting, verify our OpenCV install
+
+python
+>>> import cv2
+>>> cv2.__version__
+
+# should say your openCV version, i.e. '3.0.0'
+
+# test OpenCV programs #####################################################################################
+
+from the GitHub page, copy / paste OpenCVTest1.py, OpenCVTest2.py, and OpenCVTest3.py into nano and run to test your OpenCV compile, ex:
+
+python OpenCVTest1.py        # also test OpenCVTest2.py and OpenCVTest3.py
+
+# example servo motor control program #######################################################################
+
+cd ~                      # return to home directory if not there already
+
+# to try out PWM on the RPi, breadboard my_blink.png (same circuit as the blinking LED program earlier) then make LED_PWM.py
+
+nano LED_PWM.py               # copy/paste in LED_PWM.py from the GitHub site
+
+sudo python LED_PWM.py        # this is a simple program that controls LED brightness via PWM
+
+# next breadboard simple_servo.png, then create the program
+
+nano simple_servo.py            # copy/paste in simple_servo.py
+
+sudo python simple_servo.py     # simple program to control servo motor angle from the command line
+
+# the timing for your servo may be different, see servo_calculation_example.png
+
+# Finalie (putting it all together) - pan and tilt tracker ###################################################
+
+# breadboard pan_and_tilt_tracker.png
+
+nano pan_and_tilt_tracker.py     # copy / paste in pan_and_tilt_tracker.py, the webcam will pan/tilt on the servos to follow a red ball
+
+sudo python pan_and_tilt_tracker.py headed        # this will start pan_and_tilt_tracker.py with windows showing the tracking
+sudo python pan_and_tilt_tracker.py headless      # this will start pan_and_tilt_tracker.py without windows

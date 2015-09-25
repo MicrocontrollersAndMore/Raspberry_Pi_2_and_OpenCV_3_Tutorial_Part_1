@@ -1,3 +1,15 @@
+# Raspberry Pi ESD precautions ##################################################################
+
+use ESD precautions anytime the RPi is not in its case, a properly grounded ESD workstation is recommended, it would be suggested to view my video series on setting up an ESD workstation:
+https://www.youtube.com/watch?v=iKQt5x_Zi50
+https://www.youtube.com/watch?v=Z-GVxM9O6jA
+https://www.youtube.com/watch?v=NOwyyCwn-Yc
+
+in lieu of an ESD workstation, observe the following precautions when the RPi is not in its case:
+-do NOT work in an area where the floor is carpeted
+-a moment before touching the RPi, touch a substantial size metal object first (ex. a computer case)
+-when handling the RPi, hold the board by the edges and only let your fingers touch the board edge or the outside of the large connectors on the board, do not let your fingers touch chips or pins
+
 # making the Raspbian SD card ###################################################################
 
 download latest version of Raspbian from www.raspberrypi.org

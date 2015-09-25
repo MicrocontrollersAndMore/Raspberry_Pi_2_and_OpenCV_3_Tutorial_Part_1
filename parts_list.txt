@@ -1,0 +1,64 @@
+Raspberry Pi 2 + OpenCV 3 Tutorial - Parts List
+
+2 Raspberry Pi 2s (recommend to have an extra in case something goes wrong with one), ex:
+https://www.sparkfun.com/products/13297
+(or search Amazon.com for "Raspberry Pi 2", many distributors will appear)
+
+2 RPi 2 cases (one case for each RPi 2), ex:
+https://www.sparkfun.com/products/13103
+http://www.amazon.com/Premium-Clear-Case-Raspberry-Model/dp/B00MQLB1N6/ref=sr_1_1?s=pc&ie=UTF8&qid=1441683407&sr=1-1&keywords=raspberry+pi+2+case
+
+2 16GB Micro SD cards (recommend to have an extra in case something goes wrong with one, 3 would be even better as these are small and easily lost or damanged), ex:
+http://www.amazon.com/SanDisk-Memory-Adapter--SDSDQUAN-016G-G4A-Version/dp/B00M55C0LK/ref=sr_1_3?ie=UTF8&qid=1441761120&sr=8-3&keywords=micro+sd+card+16+gb
+http://www.amazon.com/Samsung-Class-Adapter-MB-MP16DA-AM/dp/B00IVPU7KE/ref=sr_1_7?ie=UTF8&qid=1441761120&sr=8-7&keywords=micro+sd+card+16+gb
+http://www.amazon.com/Sony-Memory-SR16UY2A-TQ-VERSION/dp/B00X1404P8/ref=sr_1_1?ie=UTF8&qid=1441761278&sr=8-1&keywords=sony+16gb+micro+sd+card
+Note: the official minumum size is 8GB, 16GB would be recommended in case extra storage is necessary in the future, if you have a bigger SD already you can use that instead
+
+extra monitor with an HDMI or DVI connector (or be willing to borrow one from your desktop temporarily)
+extra monitor cable (HDMI on one end and either HDMI or DVI on the other end (whichever your extra monitor has))
+extra USB keyboard and mouse (or be willing to borrow from your desktop temporarily)
+
+wireless USB adapter (unless you plan on using a wired Ethernet connection)
+most common USB wireless adapters work well with the RPi at this point, I can verify the following 2 work well out of the box (no configuration necessary other than entering the wireless network key into Raspbian before the first use):
+http://www.amazon.com/Edimax-EW-7811Un-150Mbps-Raspberry-Supports/dp/B003MTTJOY/ref=sr_1_2?s=pc&ie=UTF8&qid=1441760233&sr=1-2&keywords=USB+wireless+adapter
+http://www.amazon.com/Panda-Ultra-150Mbps-Wireless-Adapter/dp/B00762YNMG/ref=sr_1_1?s=pc&ie=UTF8&qid=1441760329&sr=1-1&keywords=USB+wireless+adapter+panda
+
+5V wall power supply that can provide at least 2 amps and has a USB Micro-B end, ex:
+https://www.sparkfun.com/products/12890
+http://www.amazon.com/NorthPada-Supply-Charger-2000mA-Raspberry/dp/B00OY7HR1U/ref=sr_1_3?ie=UTF8&qid=1441760390&sr=8-3&keywords=raspberry+pi+power+supply
+
+if you plan on connecting more than 4 USB devices to the RPi simultaneously you will need a powered USB hub, ex.
+http://www.amazon.com/AmazonBasics-Port-2-5A-power-adapter/dp/B00DQFGH80/ref=sr_1_1?ie=UTF8&qid=1441762455&sr=8-1&keywords=powered+USB+3.0+hub
+(to complete the video you will NOT need a USB hub, no more than 4 USB devices are connected at a time during the video)
+
+breadboard, wires, multimeter, other typical electronic assembly tools and items, available from various retailers, ex:
+http://www.elexp.com
+http://www.amazon.com
+https://www.sparkfun.com
+
+adapter board and cable for connecting the RPi to a breadboard, this is not necessary but is very helpful when doing RPi projects that use more than a few of the RPi's pins
+http://www.adafruit.com/products/1989
+http://www.amazon.com/Sintron-T-Cobbler-Extension-Rainbow-Raspberry/dp/B00NWA2AS0
+
+any relaively common Webcam, I can verify that the Logitech C310 and C920 work well with the RPi:
+http://www.amazon.com/Logitech-960-000585-HD-Webcam-C310/dp/B003LVZO8S/ref=sr_1_1?ie=UTF8&qid=1441764797&sr=8-1&keywords=logitech+c310
+http://www.amazon.com/Logitech-Webcam-Widescreen-Calling-Recording/dp/B006JH8T3S/ref=sr_1_1?ie=UTF8&qid=1441764825&sr=8-1&keywords=logitech+920
+most likely any relatively common webcam will work well with the RPi as the USB camera support has been well developed by now
+
+2 common servos, in the example video two Hitec HS-645MG are used
+https://www.servocity.com/html/hs-645mg_ultra_torque.html#.VgTNg-SFO38
+most relatively common servos will work
+
+pan and tilt kit for servos, for example the following is used in the video:
+https://www.servocity.com/html/spt100_pan___tilt_system.html#.VgTODOSFO38
+alternatively you can make your own from sheet metal without too much difficulty
+
+
+
+
+
+
+
+
+
+

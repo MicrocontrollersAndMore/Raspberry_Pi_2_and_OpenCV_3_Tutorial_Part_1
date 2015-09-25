@@ -7,16 +7,16 @@ https://www.youtube.com/watch?v=NOwyyCwn-Yc
 
 in lieu of an ESD workstation, observe the following precautions when the RPi is not in its case:
 -do NOT work in an area where the floor is carpeted
--a moment before touching the RPi, touch a substantial size metal object first (ex. a computer case)
+-a moment before touching the RPi, touch a substantial size metal object first (ex. a computer case or metal cabinet)
 -when handling the RPi, hold the board by the edges and only let your fingers touch the board edge or the outside of the large connectors on the board, do not let your fingers touch chips or pins
 
 # making the Raspbian SD card #################################################################################
 
-download latest version of Raspbian from www.raspberrypi.org
+download latest .zip version of Raspbian from www.raspberrypi.org, ex: "2015-05-05-raspbian-wheezy.zip", then unzip
 
-download Win32DiskImager (either follow the link from this page on the Raspberry Pi official site "https://www.raspberrypi.org/documentation/installation/installing-images/windows.md" or Google "Win32 Disk Imager SourceForge")
+download and install Win32DiskImager (either follow the link from this page on the Raspberry Pi official site "https://www.raspberrypi.org/documentation/installation/installing-images/windows.md" or Google "Win32 Disk Imager SourceForge"), during installation check the "Create a desktop icon", for all other choices the defaults are ok
 
-flash Raspbian to the SD card, when flashing is complete before removing the SD card, make sure to right-click on the SD card drive letter and choose "Eject", then remove the SD card
+insert and format your SD card (default settings are ok for the format), then open Win32DiskImager and flash Raspbian to the SD card, when flashing is complete before removing the SD card, make sure to right-click on the SD card drive letter and choose "Eject", then remove the SD card (if "Eject" is not an option then most likely write-caching is not enabled in which case choosing "Eject" is not necessary)
 
 # first time boot-up ##########################################################################################
 
@@ -24,12 +24,12 @@ insert the flashed SD card into the RPi, then connect:
 -USB keyboard
 -USB mouse
 -USB wireless adapter
--webcam
+-USB webcam
 -HDMI monitor cable
--power (connect power last)
+-power (connect power last as the RPi will begin booting when power is connected, there is no "ON" switch)
 
-raspi-config option 1 - set OS to fill SD card
-raspi-config option 4 - set U.S. keyboard
+raspi-config option 1 - Expand Filesystem - set OS to fill SD card
+raspi-config option 4 - Internationalisation Options - set U.S. keyboard
 
 log in with the default username / password, which is pi / raspberry
 
@@ -49,7 +49,9 @@ an installer is not necessary for PuTTY, for example you could make a directory 
 
 install Xming and Xming-fonts (http://sourceforge.net/projects/xming)
 
-when installing Xming and Xming-fonts, choose to create an Xming shortcut on your desktop and to install all fonts, for all other choices the defaults are ok, then reboot after installing PuTTY and Xming and Xming-fonts
+when installing Xming and Xming-fonts, choose to create an Xming shortcut on your desktop and to install all fonts, for all other choices the defaults are ok, the Xming-fonts install may prompt "The Xming directory already exists, you you want to install Xming-fonts to the same directory?", if this prompt appears choose "yes"
+
+reboot after installing PuTTY, Xming, and Xming-fonts
 
 start PuTTY and set the following settings:
 -your RPi IP address
@@ -123,7 +125,7 @@ sudo python my_blink.py    # run the program with this command, note sudo "super
 
 # if you would like to make your program run when Raspbian boots (i.e. for a headless embedded application) proceed as follows . . .
 
-sudo nano /ect/rc.local               # open rc.local in the nano editor
+sudo nano /etc/rc.local               # open rc.local in the nano editor
 
 # in rc.local just before "exit 0" add the following
 
@@ -132,8 +134,10 @@ sudo python /home/pi/my_blink.py &         # add this to rc.local, just before "
 # note 1: Do NOT forget the "&" to start as a separate process or the RPi will run your program indefinitely and will not continue to boot !!
 #         Forgetting the "&" could put the RPi in an unrecoverable state (necessitating re-formatting the SD card).
 
-# note 2: /etc/rc.local is ran by the RPi as root during boot-up, so you don't really need to include "sudo" in the command even if accessing GPIO pins,
-          but including sudo does not seem to hurt either.
+# note 2: /etc/rc.local is ran by the RPi as root during boot-up, so you don't really need to include "sudo" in the command
+          even if accessing GPIO pins, but including sudo does not seem to hurt either.
+
+sudo shutdown -r now       # reboot, the LED should start blinking during RPi boot-up
 
 # using the Raspbian provided OpenCV pre-compiled binaries ####################################################
 

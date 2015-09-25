@@ -14,7 +14,7 @@ def main():
 
     pwmObject = GPIO.PWM(led_gpio_pin, 100)         # frequency = 100 Hz
 
-    pwmObject.start(14)             # initial duty cycle = 14# %
+    pwmObject.start(14)             # initial duty cycle = 14%
 
     while True:
         strAngle = raw_input("enter desired angle (0 to 180): ")

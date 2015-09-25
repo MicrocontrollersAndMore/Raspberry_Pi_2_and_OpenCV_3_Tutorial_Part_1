@@ -25,6 +25,7 @@ def main():
         print "error: capWebcam not accessed successfully\n\n"      # if not, print error message to std out
         os.system("pause")                                          # pause until user presses a key so user can see error message
         return                                                      # and exit function (which exits program)
+    # end if
 
     while cv2.waitKey(1) != 27 and capWebcam.isOpened():            # until the Esc key is pressed or webcam connection is lost
         blnFrameReadSuccessfully, imgOriginal = capWebcam.read()            # read next frame
@@ -33,6 +34,7 @@ def main():
             print "error: frame not read from webcam\n"             # print error message to std out
             os.system("pause")                                      # pause until user presses a key so user can see error message
             break                                                   # exit while loop (which exits program)
+        # end if
 
         imgGrayscale = cv2.cvtColor(imgOriginal, cv2.COLOR_BGR2GRAY)    # convert to grayscale
 

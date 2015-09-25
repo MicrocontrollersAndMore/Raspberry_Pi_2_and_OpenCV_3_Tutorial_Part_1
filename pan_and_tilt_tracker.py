@@ -30,6 +30,7 @@ def main():
         print "for headed mode (GUI interface) @command prompt type: sudo python pan_and_tilt_tracker.py headed\n"
         print "for headless mode (no GUI interface, i.e. embedded mode) @ command prompt type: sudo python pan_and_tilt_tracker.py headless\n"
         return
+    # end if else
 
     GPIO.setmode(GPIO.BCM)              # use GPIO pin numbering, not physical pin numbering
 
@@ -61,6 +62,7 @@ def main():
         print "error: capWebcam not accessed successfully\n\n"          # if not, print error message to std out
         os.system("pause")                                              # pause until user presses a key so user can see error message
         return                                                          # and exit function (which exits program)
+    # end if
 
     intXFrameCenter = int(float(capWebcam.get(cv2.CAP_PROP_FRAME_WIDTH)) / 2.0)
     intYFrameCenter = int(float(capWebcam.get(cv2.CAP_PROP_FRAME_WIDTH)) / 2.0)
@@ -70,69 +72,66 @@ def main():
 
     updateServoMotorPositions(pwmPanObject, panServoPosition, pwmTiltObject, tiltServoPosition)
 
-    try:
-        while cv2.waitKey(1) != 27 and capWebcam.isOpened():                # until the Esc key is pressed or webcam connection is lost
-            blnFrameReadSuccessfully, imgOriginal = capWebcam.read()            # read next frame
+    while cv2.waitKey(1) != 27 and capWebcam.isOpened():                # until the Esc key is pressed or webcam connection is lost
+        blnFrameReadSuccessfully, imgOriginal = capWebcam.read()            # read next frame
 
-            if not blnFrameReadSuccessfully or imgOriginal is None:             # if frame was not read successfully
-                print "error: frame not read from webcam\n"                     # print error message to std out
-                os.system("pause")                                              # pause until user presses a key so user can see error message
-                break                                                           # exit while loop (which exits program)
+        if not blnFrameReadSuccessfully or imgOriginal is None:             # if frame was not read successfully
+            print "error: frame not read from webcam\n"                     # print error message to std out
+            os.system("pause")                                              # pause until user presses a key so user can see error message
+            break                                                           # exit while loop (which exits program)
+        # end if
 
-            imgHSV = cv2.cvtColor(imgOriginal, cv2.COLOR_BGR2HSV)
+        imgHSV = cv2.cvtColor(imgOriginal, cv2.COLOR_BGR2HSV)
 
-            imgThreshLow = cv2.inRange(imgHSV, np.array([0, 135, 155]), np.array([19, 255, 255]))
-            imgThreshHigh = cv2.inRange(imgHSV, np.array([170, 135, 155]), np.array([179, 255, 255]))
+        imgThreshLow = cv2.inRange(imgHSV, np.array([0, 135, 155]), np.array([19, 255, 255]))
+        imgThreshHigh = cv2.inRange(imgHSV, np.array([170, 135, 155]), np.array([179, 255, 255]))
 
-            imgThresh = cv2.add(imgThreshLow, imgThreshHigh)
+        imgThresh = cv2.add(imgThreshLow, imgThreshHigh)
 
-            imgThresh = cv2.GaussianBlur(imgThresh, (3, 3), 2)
+        imgThresh = cv2.GaussianBlur(imgThresh, (3, 3), 2)
 
-            imgThresh = cv2.dilate(imgThresh, np.ones((5,5),np.uint8))
-            imgThresh = cv2.erode(imgThresh, np.ones((5,5),np.uint8))
+        imgThresh = cv2.dilate(imgThresh, np.ones((5,5),np.uint8))
+        imgThresh = cv2.erode(imgThresh, np.ones((5,5),np.uint8))
 
-            intRows, intColumns = imgThresh.shape
+        intRows, intColumns = imgThresh.shape
 
-            circles = cv2.HoughCircles(imgThresh, cv2.HOUGH_GRADIENT, 3, intRows / 4)      # fill variable circles with all circles in the processed image
+        circles = cv2.HoughCircles(imgThresh, cv2.HOUGH_GRADIENT, 3, intRows / 4)      # fill variable circles with all circles in the processed image
 
-            if circles is not None:                     # this line is necessary to keep program from crashing on next line if no circles were found
+        if circles is not None:                     # this line is necessary to keep program from crashing on next line if no circles were found
 
-                sortedCircles = sorted(circles[0], key = itemgetter(2), reverse = True)
+            sortedCircles = sorted(circles[0], key = itemgetter(2), reverse = True)
 
-                largestCircle = sortedCircles[0]
+            largestCircle = sortedCircles[0]
 
-                x, y, radius = largestCircle                                                                       # break out x, y, and radius
-                print "ball position x = " + str(x) + ", y = " + str(y) + ", radius = " + str(radius)       # print ball position and radius
+            x, y, radius = largestCircle                                                                       # break out x, y, and radius
+            print "ball position x = " + str(x) + ", y = " + str(y) + ", radius = " + str(radius)       # print ball position and radius
 
-                if x < intXFrameCenter and panServoPosition >= 2:
-                    panServoPosition = panServoPosition - 2
-                elif x > intXFrameCenter and panServoPosition <= 178:
-                    panServoPosition = panServoPosition + 2
-                # end if else
+            if x < intXFrameCenter and panServoPosition >= 2:
+                panServoPosition = panServoPosition - 2
+            elif x > intXFrameCenter and panServoPosition <= 178:
+                panServoPosition = panServoPosition + 2
+            # end if else
 
-                if y < intYFrameCenter and tiltServoPosition >= 62:
-                    tiltServoPosition = tiltServoPosition - 2
-                elif y > intYFrameCenter and tiltServoPosition <= 133:
-                    tiltServoPosition = tiltServoPosition + 2
-                # end if else
+            if y < intYFrameCenter and tiltServoPosition >= 62:
+                tiltServoPosition = tiltServoPosition - 2
+            elif y > intYFrameCenter and tiltServoPosition <= 133:
+                tiltServoPosition = tiltServoPosition + 2
+            # end if else
 
-                updateServoMotorPositions(pwmPanObject, panServoPosition, pwmTiltObject, tiltServoPosition)
-
-                if headed_or_headless == "headed":
-                    cv2.circle(imgOriginal, (x, y), 3, (0, 255, 0), -1)           # draw small green circle at center of detected object
-                    cv2.circle(imgOriginal, (x, y), radius, (0, 0, 255), 3)                     # draw red circle around the detected object
-                # end if
-
-            # end if
+            updateServoMotorPositions(pwmPanObject, panServoPosition, pwmTiltObject, tiltServoPosition)
 
             if headed_or_headless == "headed":
-                cv2.imshow("imgOriginal", imgOriginal)                 # show windows
-                cv2.imshow("imgThresh", imgThresh)
+                cv2.circle(imgOriginal, (x, y), 3, (0, 255, 0), -1)           # draw small green circle at center of detected object
+                cv2.circle(imgOriginal, (x, y), radius, (0, 0, 255), 3)                     # draw red circle around the detected object
             # end if
-        # end while
-    except KeyboardInterrupt:       # exit cleanly when Ctrl+C is pressed
-        GPIO.cleanup()
-    # end try except
+
+        # end if
+
+        if headed_or_headless == "headed":
+            cv2.imshow("imgOriginal", imgOriginal)                 # show windows
+            cv2.imshow("imgThresh", imgThresh)
+        # end if
+    # end while
 
     cv2.destroyAllWindows()                     # remove windows from memory
 

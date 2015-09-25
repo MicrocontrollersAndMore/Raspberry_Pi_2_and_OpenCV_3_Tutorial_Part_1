@@ -8,11 +8,11 @@ https://www.sparkfun.com/products/13297
 https://www.sparkfun.com/products/13103
 http://www.amazon.com/Premium-Clear-Case-Raspberry-Model/dp/B00MQLB1N6/ref=sr_1_1?s=pc&ie=UTF8&qid=1441683407&sr=1-1&keywords=raspberry+pi+2+case
 
-2 16GB Micro SD cards (recommend to have an extra in case something goes wrong with one, 3 would be even better as these are small and easily lost or damanged), ex:
+2 16GB Micro SD cards (recommend to have an extra in case something goes wrong with one, 3 would be even better as these are small and easily lost or damaged), ex:
 http://www.amazon.com/SanDisk-Memory-Adapter--SDSDQUAN-016G-G4A-Version/dp/B00M55C0LK/ref=sr_1_3?ie=UTF8&qid=1441761120&sr=8-3&keywords=micro+sd+card+16+gb
 http://www.amazon.com/Samsung-Class-Adapter-MB-MP16DA-AM/dp/B00IVPU7KE/ref=sr_1_7?ie=UTF8&qid=1441761120&sr=8-7&keywords=micro+sd+card+16+gb
 http://www.amazon.com/Sony-Memory-SR16UY2A-TQ-VERSION/dp/B00X1404P8/ref=sr_1_1?ie=UTF8&qid=1441761278&sr=8-1&keywords=sony+16gb+micro+sd+card
-Note: the official minumum size is 8GB, 16GB would be recommended in case extra storage is necessary in the future, if you have a bigger SD already you can use that instead
+Note: the official minimum size is 8GB, 16GB would be recommended in case extra storage is necessary in the future, if you have a bigger SD already you can use that instead
 
 extra monitor with an HDMI or DVI connector (or be willing to borrow one from your desktop temporarily)
 extra monitor cable (HDMI on one end and either HDMI or DVI on the other end (whichever your extra monitor has))
@@ -20,6 +20,7 @@ extra USB keyboard and mouse (or be willing to borrow from your desktop temporar
 
 wireless USB adapter (unless you plan on using a wired Ethernet connection)
 most common USB wireless adapters work well with the RPi at this point, I can verify the following 2 work well out of the box (no configuration necessary other than entering the wireless network key into Raspbian before the first use):
+https://www.sparkfun.com/products/13677
 http://www.amazon.com/Edimax-EW-7811Un-150Mbps-Raspberry-Supports/dp/B003MTTJOY/ref=sr_1_2?s=pc&ie=UTF8&qid=1441760233&sr=1-2&keywords=USB+wireless+adapter
 http://www.amazon.com/Panda-Ultra-150Mbps-Wireless-Adapter/dp/B00762YNMG/ref=sr_1_1?s=pc&ie=UTF8&qid=1441760329&sr=1-1&keywords=USB+wireless+adapter+panda
 
@@ -40,7 +41,7 @@ adapter board and cable for connecting the RPi to a breadboard, this is not nece
 http://www.adafruit.com/products/1989
 http://www.amazon.com/Sintron-T-Cobbler-Extension-Rainbow-Raspberry/dp/B00NWA2AS0
 
-any relaively common Webcam, I can verify that the Logitech C310 and C920 work well with the RPi:
+any relatively common Webcam, I can verify that the Logitech C310 and C920 work well with the RPi:
 http://www.amazon.com/Logitech-960-000585-HD-Webcam-C310/dp/B003LVZO8S/ref=sr_1_1?ie=UTF8&qid=1441764797&sr=8-1&keywords=logitech+c310
 http://www.amazon.com/Logitech-Webcam-Widescreen-Calling-Recording/dp/B006JH8T3S/ref=sr_1_1?ie=UTF8&qid=1441764825&sr=8-1&keywords=logitech+920
 most likely any relatively common webcam will work well with the RPi as the USB camera support has been well developed by now

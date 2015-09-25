@@ -13,16 +13,12 @@ def main():
 
     GPIO.setup(led_gpio_pin, GPIO.OUT)
 
-    try:
-        while True:
-            GPIO.output(led_gpio_pin, GPIO.HIGH)
-            time.sleep(0.5)
-            GPIO.output(led_gpio_pin, GPIO.LOW)
-            time.sleep(0.5)
-        # end while
-    except KeyboardInterrupt:       # exit cleanly when Ctrl+C is pressed
-        GPIO.cleanup()
-    # end try except
+    while True:
+        GPIO.output(led_gpio_pin, GPIO.HIGH)
+        time.sleep(0.5)
+        GPIO.output(led_gpio_pin, GPIO.LOW)
+        time.sleep(0.5)
+    # end while
 
     return
 # end main

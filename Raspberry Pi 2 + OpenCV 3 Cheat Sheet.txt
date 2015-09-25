@@ -1,4 +1,4 @@
-# Raspberry Pi ESD precautions ##################################################################
+# Raspberry Pi ESD precautions ################################################################################
 
 use ESD precautions anytime the RPi is not in its case, a properly grounded ESD workstation is recommended, it would be suggested to view my video series on setting up an ESD workstation:
 https://www.youtube.com/watch?v=iKQt5x_Zi50
@@ -10,15 +10,15 @@ in lieu of an ESD workstation, observe the following precautions when the RPi is
 -a moment before touching the RPi, touch a substantial size metal object first (ex. a computer case)
 -when handling the RPi, hold the board by the edges and only let your fingers touch the board edge or the outside of the large connectors on the board, do not let your fingers touch chips or pins
 
-# making the Raspbian SD card ###################################################################
+# making the Raspbian SD card #################################################################################
 
 download latest version of Raspbian from www.raspberrypi.org
 
-download Win32DiskImager (either follow the link from this page on the Raspberry Pi official site "https://www.raspberrypi.org/documentation/installation/installing-images/windows.md" or Google "win32 disk imager sourceforge")
+download Win32DiskImager (either follow the link from this page on the Raspberry Pi official site "https://www.raspberrypi.org/documentation/installation/installing-images/windows.md" or Google "Win32 Disk Imager SourceForge")
 
 flash Raspbian to the SD card, when flashing is complete before removing the SD card, make sure to right-click on the SD card drive letter and choose "Eject", then remove the SD card
 
-# first time boot-up ############################################################################
+# first time boot-up ##########################################################################################
 
 insert the flashed SD card into the RPi, then connect:
 -USB keyboard
@@ -39,11 +39,17 @@ choose wireless icon at the top right, enter wireless router password, verify ne
 
 hostname -I      # write down IP address
 
-sudo shutdown -r now     # reboot, you don't need to log in on the RPi after rebotting
+sudo shutdown -r now     # reboot, you don't need to log in on the RPi after rebooting
 
-# PuTTY and Xming ###############################################################################
+# PuTTY and Xming #############################################################################################
 
-install PuTTY (http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html) and Xming and Xming-fonts (http://sourceforge.net/projects/xming), when installing Xming-fonts, choose to install all fonts, otherwise the defaults are ok, reboot after installing
+install PuTTY (http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html, choose "putty.exe")
+
+an installer is not necessary for PuTTY, for example you could make a directory "C:\putty" and save putty.exe to there, then create a PuTTY shortcut on your desktop
+
+install Xming and Xming-fonts (http://sourceforge.net/projects/xming)
+
+when installing Xming and Xming-fonts, choose to create an Xming shortcut on your desktop and to install all fonts, for all other choices the defaults are ok, then reboot after installing PuTTY and Xming and Xming-fonts
 
 start PuTTY and set the following settings:
 -your RPi IP address
@@ -54,9 +60,9 @@ then save these settings by entering a preferred name in the "Saved Sessions" bo
 
 to begin a PuTTY session, load your preferred settings and click "Open"
 
-start Xming before or just after beginning a PuTTY session if you would like to see Raspbian windows rendered on your Windows desktop computer, to verify Xming is running look for the Xming icon (black X with a red circle around it) in the "notification area" (aka "system tray") adjacent to the clock
+start Xming before or just after beginning a PuTTY session if you would like to see Raspbian windows rendered on your Windows desktop computer, to verify Xming is running look for the Xming icon (black X with a red circle around it) in the "notification area" (aka "system tray") adjacent to the clock (lower right corner of your Windows screen)
 
-to verify PuTTY and Xming are working try the following commands
+to verify PuTTY and Xming are working, start PuTTY try the following commands
 
 pwd                      # present working directory, should say "/home/pi" as this is the default location for the user "pi"
 ls -l                    # lists the files in the current directory
@@ -69,7 +75,7 @@ note that the "&" starts (in Linux parlance "forks") programs as a separate proc
 
 from this point on most of the cheat sheet is commands to be copied / pasted into a PuTTY session
 
-# verify webcam works ####################################################################################
+# verify webcam works #########################################################################################
 
 lsusb           # your webcam should be listed
 
@@ -91,9 +97,15 @@ sudo apt-get install luvcview       # install webcam stream viewer
 
 luvcview -s 320x240                 # test webcam
 
-# get a LED blinking #####################################################################################
+# get a LED blinking ##########################################################################################
 
 breadboard "my_blink.png"
+
+if you are wondering how to calculate the resistor value in this circuit, see "resistor for LED calculation.pdf"
+
+see "RaspberryPi2_J8_pinout.png" for a complete RPi 2 connector J8 pinout
+
+continuing at the RPi command line:
 
 cd ~                   # return to home directory if not there already
 
@@ -109,7 +121,7 @@ sudo python my_blink.py    # run the program with this command, note sudo "super
 
 # you should now see the LED on your board blinking
 
-# if you would like to make your program run when Raspbian boots (i.e. for a headless embeded application) proceed as follows . . .
+# if you would like to make your program run when Raspbian boots (i.e. for a headless embedded application) proceed as follows . . .
 
 sudo nano /ect/rc.local               # open rc.local in the nano editor
 
@@ -117,13 +129,13 @@ sudo nano /ect/rc.local               # open rc.local in the nano editor
 
 sudo python /home/pi/my_blink.py &         # add this to rc.local, just before "exit 0"
 
-# note 1: Do NOT forget the "&" to start as a separate process or the RPi will run your program indefinately and will not continue to boot !!
-#         Forgetting the "&" could put the RPi in an unrecoverable state (necessating re-formatting the SD card).
+# note 1: Do NOT forget the "&" to start as a separate process or the RPi will run your program indefinitely and will not continue to boot !!
+#         Forgetting the "&" could put the RPi in an unrecoverable state (necessitating re-formatting the SD card).
 
 # note 2: /etc/rc.local is ran by the RPi as root during boot-up, so you don't really need to include "sudo" in the command even if accessing GPIO pins,
           but including sudo does not seem to hurt either.
 
-# using the Raspbian provided OpenCV pre-compiled binaries ##################################################
+# using the Raspbian provided OpenCV pre-compiled binaries ####################################################
 
 Note: I do NOT recommend following the steps in this section, this is here for information/reference only.  The recommended procedure is to not perform the steps in this section and to continue to the next section to compile OpenCV 3.0.0 or later from source.
 
@@ -133,7 +145,7 @@ dpkg -l | less
 
 This will list all installed packages.  Navigate to the opencv libs and you will see the version of the OpenCV libraries included with the current Raspbian build is 2.4.1, which was released in June of 2012.  It is not recommended to use such an old version of OpenCV, especially with Python since a major change in how OpenCV images are stored in Python was made in OpenCV 2.3 and these changes were still being completed as of OpenCV 2.4.1.
 
-If you are absolutely insistant on using the pre-compiled OpenCV binaries to avoid compiling from source, proceed as follows at the RPi command line (as mentioned above this is NOT recommended):
+If you are absolutely insistent on using the pre-compiled OpenCV binaries to avoid compiling from source, proceed as follows at the RPi command line (as mentioned above this is NOT recommended):
 
 sudo apt-get update
 sudo apt-get upgrade
@@ -146,9 +158,9 @@ python
 >>> import cv2
 >>> cv2.__version__        # will say "2.4.1" if pre-compiled binary installation was successful
 
-Note that if you use these old pre-compilied binaries the OpenCV Python programs used in this tutorial will NOT work since they have been written for OpenCV 3.
+Note that if you use these old pre-compiled binaries the OpenCV Python programs used in this tutorial will NOT work since they have been written for OpenCV 3.
 
-# OpenCV compile ###############################################################################################
+# OpenCV compile ################################################################################################
 
 # this takes about 3.5 hours total on a RPi 2, the make command alone takes about 3 hours
 
@@ -247,20 +259,21 @@ python
 >>> import cv2
 >>> cv2.__version__
 
-# should say your openCV version, i.e. '3.0.0'
+# should say your OpenCV version, i.e. '3.0.0'
 
-# test OpenCV programs #####################################################################################
+# test OpenCV programs ###########################################################################################
 
 from the GitHub page, copy / paste OpenCVTest1.py, OpenCVTest2.py, and OpenCVTest3.py into nano and run to test your OpenCV compile, ex:
 
 python OpenCVTest1.py        # also test OpenCVTest2.py and OpenCVTest3.py
 
-# example servo motor control program #######################################################################
+# example servo motor control program ############################################################################
 
 cd ~                      # return to home directory if not there already
 
-# to try out PWM on the RPi, breadboard my_blink.png (same circuit as the blinking LED program earlier) then make LED_PWM.py
+# to try out PWM on the RPi, breadboard LED_PWM.png (same circuit as my_blink.png above) then make LED_PWM.py and open in nano
 
+touch LED_PWM.py              # make empty file LED_PWM.py
 nano LED_PWM.py               # copy/paste in LED_PWM.py from the GitHub site
 
 sudo python LED_PWM.py        # this is a simple program that controls LED brightness via PWM
@@ -271,9 +284,9 @@ nano simple_servo.py            # copy/paste in simple_servo.py
 
 sudo python simple_servo.py     # simple program to control servo motor angle from the command line
 
-# the timing for your servo may be different, see servo_calculation_example.png
+# the timing for your servo may be different, see "example servo timing calculation.pdf"
 
-# Finalie (putting it all together) - pan and tilt tracker ###################################################
+# Finale (putting it all together) - pan and tilt tracker ########################################################
 
 # breadboard pan_and_tilt_tracker.png
 

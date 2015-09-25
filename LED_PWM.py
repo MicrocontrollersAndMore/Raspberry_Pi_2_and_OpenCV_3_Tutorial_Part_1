@@ -18,16 +18,11 @@ def main():
 
     print "press Ctrl+C to exit"
 
-    try:
-        while True:
-            strDutyCycle = raw_input("enter brightness (0 to 100): ")
-            intDutyCycle = int(strDutyCycle)
-            pwmObject.ChangeDutyCycle(intDutyCycle)
-        # end while
-    except KeyboardInterrupt:       # exit cleanly when Ctrl+C is pressed
-        pwmObject.stop()
-        GPIO.cleanup()
-    # end try except
+    while True:
+        strDutyCycle = raw_input("enter brightness (0 to 100): ")
+        intDutyCycle = int(strDutyCycle)
+        pwmObject.ChangeDutyCycle(intDutyCycle)
+    # end while
 
     return
 # end main

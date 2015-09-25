@@ -57,7 +57,7 @@ note that the "&" starts (in Linux parlance "forks") programs as a separate proc
 
 from this point on most of the cheat sheet is commands to be copied / pasted into a PuTTY session
 
-# verify webcam works ###########################################################################
+# verify webcam works ####################################################################################
 
 lsusb           # your webcam should be listed
 
@@ -79,7 +79,7 @@ sudo apt-get install luvcview       # install webcam stream viewer
 
 luvcview -s 320x240                 # test webcam
 
-# get a LED blinking #############################################################################
+# get a LED blinking #####################################################################################
 
 breadboard "my_blink.png"
 
@@ -97,11 +97,19 @@ sudo python my_blink.py    # run the program with this command, note sudo "super
 
 # you should now see the LED on your board blinking
 
+# if you would like to make your program run when Raspbian boots (i.e. for a headless embeded application) proceed as follows . . .
 
+sudo nano /ect/rc.local               # open rc.local in the nano editor
 
-!!!!!!!!! put instructions here to set program to run at boot time !!!!!!!!!!!!!!!!!!!
+# in rc.local just before "exit 0" add the following
 
+sudo python /home/pi/my_blink.py &         # add this to rc.local, just before "exit 0"
 
+# note 1: Do NOT forget the "&" to start as a separate process or the RPi will run your program indefinately and will not continue to boot !!
+#         Forgetting the "&" could put the RPi in an unrecoverable state (necessating re-formatting the SD card).
+
+# note 2: /etc/rc.local is ran by the RPi as root during boot-up, so you don't really need to include "sudo" in the command even if accessing GPIO pins,
+          but including sudo does not seem to hurt either.
 
 # using the Raspbian provided OpenCV pre-compiled binaries ##################################################
 

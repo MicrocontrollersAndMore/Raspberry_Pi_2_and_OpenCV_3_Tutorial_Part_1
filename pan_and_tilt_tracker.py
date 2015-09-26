@@ -34,12 +34,14 @@ def main():
 
     GPIO.setmode(GPIO.BCM)              # use GPIO pin numbering, not physical pin numbering
 
+    led_gpio_pin = 18
     pan_gpio_pin = 24
     tilt_gpio_pin = 25
 
     pwmFrequency = 100                 # frequency in Hz
     pwmInitialDutyCycle = 14           # initial duty cycle in %
 
+    GPIO.setup(led_gpio_pin, GPIO.OUT)
     GPIO.setup(pan_gpio_pin, GPIO.OUT)
     GPIO.setup(tilt_gpio_pin, GPIO.OUT)
 
@@ -83,8 +85,8 @@ def main():
 
         imgHSV = cv2.cvtColor(imgOriginal, cv2.COLOR_BGR2HSV)
 
-        imgThreshLow = cv2.inRange(imgHSV, np.array([0, 135, 155]), np.array([19, 255, 255]))
-        imgThreshHigh = cv2.inRange(imgHSV, np.array([170, 135, 155]), np.array([179, 255, 255]))
+        imgThreshLow = cv2.inRange(imgHSV, np.array([0, 135, 135]), np.array([19, 255, 255]))
+        imgThreshHigh = cv2.inRange(imgHSV, np.array([168, 135, 135]), np.array([179, 255, 255]))
 
         imgThresh = cv2.add(imgThreshLow, imgThreshHigh)
 
@@ -97,7 +99,10 @@ def main():
 
         circles = cv2.HoughCircles(imgThresh, cv2.HOUGH_GRADIENT, 3, intRows / 4)      # fill variable circles with all circles in the processed image
 
+        GPIO.output(led_gpio_pin, GPIO.LOW)
+
         if circles is not None:                     # this line is necessary to keep program from crashing on next line if no circles were found
+            GPIO.output(led_gpio_pin, GPIO.HIGH)
 
             sortedCircles = sorted(circles[0], key = itemgetter(2), reverse = True)
 

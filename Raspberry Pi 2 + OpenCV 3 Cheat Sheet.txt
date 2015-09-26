@@ -10,6 +10,8 @@ in lieu of an ESD workstation, observe the following precautions when the RPi is
 -a moment before touching the RPi, touch a substantial size metal object first (ex. a computer case or metal cabinet)
 -when handling the RPi, hold the board by the edges and only let your fingers touch the board edge or the outside of the large connectors on the board, do not let your fingers touch chips or pins
 
+Also, shutdown the RPi (sudo shutdown -h now) and disconnect power before breadboarding a circuit
+
 # making the Raspbian SD card #################################################################################
 
 download latest .zip version of Raspbian from www.raspberrypi.org, ex: "2015-05-05-raspbian-wheezy.zip", then unzip
@@ -139,6 +141,10 @@ sudo python /home/pi/my_blink.py &         # add this to rc.local, just before "
 
 sudo shutdown -r now       # reboot, the LED should start blinking during RPi boot-up
 
+# to return to the regular boot-up, simply open rc.local again and remove the "sudo python /home/pi/my_blink.py &" line
+
+sudo nano /etc/rc.local          # remove the "sudo python /home/pi/my_blink.py &"
+
 # using the Raspbian provided OpenCV pre-compiled binaries ####################################################
 
 Note: I do NOT recommend following the steps in this section, this is here for information/reference only.  The recommended procedure is to not perform the steps in this section and to continue to the next section to compile OpenCV 3.0.0 or later from source.
@@ -259,24 +265,33 @@ sudo shutdown -r now
 
 # after rebooting, verify our OpenCV install
 
-python
+python                       # enter interactive Python prompt session
 >>> import cv2
 >>> cv2.__version__
 
-# should say your OpenCV version, i.e. '3.0.0'
+# should say your OpenCV version, i.e. '3.0.0', press Ctrl+D to exit the Python prompt session
 
 # test OpenCV programs ###########################################################################################
 
 from the GitHub page, copy / paste OpenCVTest1.py, OpenCVTest2.py, and OpenCVTest3.py into nano and run to test your OpenCV compile, ex:
 
-python OpenCVTest1.py        # also test OpenCVTest2.py and OpenCVTest3.py
+nano OpenCVTest1.py          # copy/paste in OpenCVTest1.py
+
+python OpenCVTest1.py        # test OpenCVTest1.py
+
+nano OpenCVTest2.py          # copy/paste in OpenCVTest2.py
+
+python OpenCVTest2.py        # test OpenCVTest2.py
+
+nano OpenCVTest3.py          # copy/paste in OpenCVTest3.py
+
+python OpenCVTest3.py        # test OpenCVTest2.py
 
 # example servo motor control program ############################################################################
 
-cd ~                      # return to home directory if not there already
-
 # to try out PWM on the RPi, breadboard LED_PWM.png (same circuit as my_blink.png above) then make LED_PWM.py and open in nano
 
+cd ~                          # return to home directory if not there already
 touch LED_PWM.py              # make empty file LED_PWM.py
 nano LED_PWM.py               # copy/paste in LED_PWM.py from the GitHub site
 
@@ -298,3 +313,13 @@ nano pan_and_tilt_tracker.py     # copy / paste in pan_and_tilt_tracker.py, the 
 
 sudo python pan_and_tilt_tracker.py headed        # this will start pan_and_tilt_tracker.py with windows showing the tracking
 sudo python pan_and_tilt_tracker.py headless      # this will start pan_and_tilt_tracker.py without windows
+
+
+
+
+
+
+
+
+
+

@@ -141,6 +141,7 @@ nano my_blink.py       # open the file my_blink.py with the nano editor
 sudo python my_blink.py    # run the program with this command, note sudo "super user do", i.e. root access is necessary to perform hardware I/O on the RPi
 
 # you should now see the LED on your board blinking
+# press Ctrl+C to exit this program, for future reference Ctrl+C exits most programs when ran from a Linux command line
 
 # if you would like to make your program run when Raspbian boots (i.e. for a headless embedded application) proceed as follows . . .
 

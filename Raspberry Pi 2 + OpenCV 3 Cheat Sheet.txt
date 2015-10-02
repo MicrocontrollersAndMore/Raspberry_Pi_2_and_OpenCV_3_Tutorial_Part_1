@@ -2,7 +2,7 @@
 
 This cheat sheet is intended to be used in conjunction with the following video:
 
-(VIDEO LINK HERE WHEN DONE !!)
+(VIDEO LINK HERE WHEN DONE !!!!)
 
 the following other documents may also be helpful:
 readme.txt
@@ -27,6 +27,10 @@ download latest .zip version of Raspbian from www.raspberrypi.org, ex: "2015-09-
 
 download and install Win32DiskImager (either follow the link from this page on the Raspberry Pi official site "https://www.raspberrypi.org/documentation/installation/installing-images/windows.md" or Google "Win32 Disk Imager SourceForge"), during installation check the "Create a desktop icon", for all other choices the defaults are ok
 
+most computers today have an SD card slot, if yours does not you can purchase a separate USB SD card reader, ex:
+http://www.amazon.com/Transcend-Information-Card-Reader-TS-RDF5K/dp/B009D79VH4/ref=sr_1_1?s=pc&ie=UTF8&qid=1441762580&sr=1-1&keywords=SD+card+reader
+http://www.amazon.com/IOGEAR-MicroSD-Reader-Writer-GFR204SD/dp/B0046TJG1U/ref=sr_1_3?s=pc&ie=UTF8&qid=1441762580&sr=1-3&keywords=SD+card+reader
+
 insert and format your SD card (default settings are ok for the format), then open Win32DiskImager and flash Raspbian to the SD card, when flashing is complete before removing the SD card, make sure to right-click on the SD card drive letter and choose "Eject", then remove the SD card (if "Eject" is not an option then most likely write-caching is not enabled in which case choosing "Eject" is not necessary)
 
 # First Time Boot-up ##########################################################################################
@@ -39,8 +43,12 @@ insert the flashed SD card into the RPi, then connect:
 -HDMI monitor cable
 -power (connect power last as the RPi will begin booting when power is connected, there is no "ON" switch)
 
-raspi-config option 1 - Expand Filesystem - set OS to fill SD card
-raspi-config option 4 - Internationalisation Options - set U.S. keyboard
+bring up a command line (choose the icon at the top that looks like a monitor), type "sudo raspi-config", and set the following options:
+1 Expand Filesystem - set OS to fill SD card
+3 Boot Options - set to "B1 Console"
+4 Internationalization Options - set U.S. keyboard
+
+choose "Finish", when asked "Would you like to reboot?" choose "Yes", if you need to reboot from the command line type "sudo shutdown -r now" to reboot
 
 log in with the default username / password, which is pi / raspberry
 
@@ -60,7 +68,7 @@ an installer is not necessary for PuTTY, for example you could make a directory 
 
 install Xming and Xming-fonts (http://sourceforge.net/projects/xming)
 
-when installing Xming and Xming-fonts, choose to create an Xming shortcut on your desktop and to install all fonts, for all other choices the defaults are ok, the Xming-fonts install may prompt "The Xming directory already exists, you you want to install Xming-fonts to the same directory?", if this prompt appears choose "yes"
+when installing Xming and Xming-fonts, choose to create an Xming shortcut on your desktop and to install all fonts, for all other choices the defaults are ok, the Xming-fonts install may prompt "The Xming directory already exists, you want to install Xming-fonts to the same directory?", if this prompt appears choose "yes"
 
 reboot after installing PuTTY, Xming, and Xming-fonts
 
@@ -158,13 +166,11 @@ sudo nano /etc/rc.local          # remove the "sudo python /home/pi/my_blink.py 
 
 Note: I do NOT recommend following the steps in this section, this is here for information/reference only.  The recommended procedure is to not perform the steps in this section and to continue to the next section to compile OpenCV 3.0.0 or later from source.
 
-Raspbian currently includes precompiled binaries, but they are substantially out of date.  At a RPi command line enter the following:
+Raspbian includes OpenCV precompiled binaries, which as of the most recent release are only moderately out of date (OpenCV 2.4.9).  At a RPi command line enter the following:
 
 dpkg -l | less
 
-This will list all installed packages.  Navigate to the opencv libs and you will see the version of the OpenCV libraries included with the current Raspbian build is 2.4.1, which was released in June of 2012.  It is not recommended to use such an old version of OpenCV, especially with Python since a major change in how OpenCV images are stored in Python was made in OpenCV 2.3 and these changes were still being completed as of OpenCV 2.4.1.
-
-If you are absolutely insistent on using the pre-compiled OpenCV binaries to avoid compiling from source, proceed as follows at the RPi command line (as mentioned above this is NOT recommended):
+This will list all installed packages.  Navigate to the opencv libs and you will see the version of the OpenCV libraries included with the current Raspbian build is 2.4.9, which was released in April of 2014.  If you would like to use these pre-compiled binaries, proceed as follows at the RPi command line (as mentioned above this is NOT recommended):
 
 sudo apt-get update
 sudo apt-get upgrade
@@ -202,17 +208,12 @@ sudo apt-get install libjpeg8 \
 libjpeg8-dev \
 libjpeg8-dbg \
 libjpeg-progs \
-ffmpeg \
 libavcodec-dev \
-libavcodec53 \
-libavformat53 \
 libavformat-dev \
 libgstreamer0.10-0-dbg \
 libgstreamer0.10-0 \
 libgstreamer0.10-dev \
-libxine1-ffmpeg \
-libxine-dev \
-libxine1-bin \
+libxine2-dev \
 libunicap2 \
 libunicap2-dev \
 swig \
@@ -223,7 +224,6 @@ libpython2.7 \
 python-dev \
 python2.7-dev \
 libgtk2.0-dev \
-libtiff4-dev \
 libjasper-dev \
 libpng12-dev \
 libswscale-dev

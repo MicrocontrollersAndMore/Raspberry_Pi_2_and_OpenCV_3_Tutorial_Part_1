@@ -43,12 +43,12 @@ insert the flashed SD card into the RPi, then connect:
 -HDMI monitor cable
 -power (connect power last as the RPi will begin booting when power is connected, there is no "ON" switch)
 
-bring up a command line (choose the icon at the top that looks like a monitor), type "sudo raspi-config", and set the following options:
+The newest version of Raspbian, Raspbian-Jessie, boots directly into the graphical desktop, once boot-up is complete, bring up a command line (choose the icon at the top that looks like a monitor), type "sudo raspi-config", and set the following options:
 1 Expand Filesystem - set OS to fill SD card
 3 Boot Options - set to "B1 Console"
 4 Internationalization Options - set U.S. keyboard
 
-choose "Finish", when asked "Would you like to reboot?" choose "Yes", if you need to reboot from the command line type "sudo shutdown -r now" to reboot
+choose "Finish", when asked "Would you like to reboot?" choose "Yes", if you need to reboot from the command line type "sudo shutdown -r now" to reboot, for future reference if you need to shutdown without rebooting type "sudo shutdown -h now"
 
 log in with the default username / password, which is pi / raspberry
 

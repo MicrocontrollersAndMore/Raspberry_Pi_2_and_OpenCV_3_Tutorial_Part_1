@@ -1,4 +1,13 @@
-# Raspberry Pi ESD precautions ################################################################################
+# Introduction and Raspberry Pi ESD Precautions ################################################################################
+
+This cheat sheet is intended to be used in conjunction with the following video:
+
+(VIDEO LINK HERE WHEN DONE !!)
+
+the following other documents may also be helpful:
+readme.txt
+parts_list.txt
+RaspberryPi2_J8_pinout.png
 
 use ESD precautions anytime the RPi is not in its case, a properly grounded ESD workstation is recommended, it would be suggested to view my video series on setting up an ESD workstation:
 https://www.youtube.com/watch?v=iKQt5x_Zi50
@@ -12,15 +21,15 @@ in lieu of an ESD workstation, observe the following precautions when the RPi is
 
 Also, shutdown the RPi (sudo shutdown -h now) and disconnect power before breadboarding a circuit
 
-# making the Raspbian SD card #################################################################################
+# Making the Raspbian SD Card #################################################################################
 
-download latest .zip version of Raspbian from www.raspberrypi.org, ex: "2015-05-05-raspbian-wheezy.zip", then unzip
+download latest .zip version of Raspbian from www.raspberrypi.org, ex: "2015-09-24-raspbian-jessie.zip", then unzip
 
 download and install Win32DiskImager (either follow the link from this page on the Raspberry Pi official site "https://www.raspberrypi.org/documentation/installation/installing-images/windows.md" or Google "Win32 Disk Imager SourceForge"), during installation check the "Create a desktop icon", for all other choices the defaults are ok
 
 insert and format your SD card (default settings are ok for the format), then open Win32DiskImager and flash Raspbian to the SD card, when flashing is complete before removing the SD card, make sure to right-click on the SD card drive letter and choose "Eject", then remove the SD card (if "Eject" is not an option then most likely write-caching is not enabled in which case choosing "Eject" is not necessary)
 
-# first time boot-up ##########################################################################################
+# First Time Boot-up ##########################################################################################
 
 insert the flashed SD card into the RPi, then connect:
 -USB keyboard
@@ -79,7 +88,7 @@ note that the "&" starts (in Linux parlance "forks") programs as a separate proc
 
 from this point on most of the cheat sheet is commands to be copied / pasted into a PuTTY session
 
-# verify webcam works #########################################################################################
+# Verify Webcam Works #########################################################################################
 
 lsusb           # your webcam should be listed
 
@@ -101,7 +110,7 @@ sudo apt-get install luvcview       # install webcam stream viewer
 
 luvcview -s 320x240                 # test webcam
 
-# get a LED blinking ##########################################################################################
+# Get a LED Blinking ##########################################################################################
 
 breadboard "my_blink.png"
 
@@ -145,7 +154,7 @@ sudo shutdown -r now       # reboot, the LED should start blinking during RPi bo
 
 sudo nano /etc/rc.local          # remove the "sudo python /home/pi/my_blink.py &"
 
-# using the Raspbian provided OpenCV pre-compiled binaries ####################################################
+# Using the Raspbian Provided OpenCV Pre-compiled Binaries ####################################################
 
 Note: I do NOT recommend following the steps in this section, this is here for information/reference only.  The recommended procedure is to not perform the steps in this section and to continue to the next section to compile OpenCV 3.0.0 or later from source.
 
@@ -170,7 +179,7 @@ python
 
 Note that if you use these old pre-compiled binaries the OpenCV Python programs used in this tutorial will NOT work since they have been written for OpenCV 3.
 
-# OpenCV compile ################################################################################################
+# OpenCV Compile ################################################################################################
 
 # this takes about 3.5 hours total on a RPi 2, the make command alone takes about 3 hours
 
@@ -271,7 +280,7 @@ python                       # enter interactive Python prompt session
 
 # should say your OpenCV version, i.e. '3.0.0', press Ctrl+D to exit the Python prompt session
 
-# test OpenCV programs ###########################################################################################
+# Test OpenCV Programs ###########################################################################################
 
 from the GitHub page, copy / paste OpenCVTest1.py, OpenCVTest2.py, and OpenCVTest3.py into nano and run to test your OpenCV compile, ex:
 
@@ -287,7 +296,7 @@ nano OpenCVTest3.py          # copy/paste in OpenCVTest3.py
 
 python OpenCVTest3.py        # test OpenCVTest2.py
 
-# example servo motor control program ############################################################################
+# Example Servo Motor Control Program ############################################################################
 
 # to try out PWM on the RPi, breadboard LED_PWM.png (same circuit as my_blink.png above) then make LED_PWM.py and open in nano
 
@@ -305,7 +314,7 @@ sudo python simple_servo.py     # simple program to control servo motor angle fr
 
 # the timing for your servo may be different, see "example servo timing calculation.pdf"
 
-# Finale (putting it all together) - pan and tilt tracker ########################################################
+# Finale (putting it all together) - Pan and Tilt Tracker ########################################################
 
 # breadboard pan_and_tilt_tracker.png
 

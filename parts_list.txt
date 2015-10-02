@@ -54,6 +54,9 @@ pan and tilt kit for servos, for example the following is used in the video:
 https://www.servocity.com/html/spt100_pan___tilt_system.html#.VgTODOSFO38
 alternatively you can make your own from sheet metal without too much difficulty
 
+mounting bracket for the above servo used in the video:
+https://www.servocity.com/html/vertical_aluminum_mount.html#.Vg35vuSFO38
+
 
 
 

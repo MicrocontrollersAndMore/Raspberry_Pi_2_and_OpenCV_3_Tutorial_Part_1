@@ -332,4 +332,3 @@ sudo python pan_and_tilt_tracker.py headless      # this will start pan_and_tilt
 
 
 
-

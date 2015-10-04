@@ -48,7 +48,7 @@ The newest version of Raspbian, Raspbian-Jessie, boots directly into the graphic
 3 Boot Options - set to "B1 Console"
 4 Internationalization Options - set U.S. keyboard
 
-choose "Finish", when asked "Would you like to reboot?" choose "Yes", if you need to reboot from the command line type "sudo shutdown -r now" to reboot, for future reference if you need to shutdown without rebooting type "sudo shutdown -h now"
+choose "Finish", when asked "Would you like to reboot?" choose "Yes", if you need to reboot from the command line type "sudo shutdown -r now" to reboot, for future reference if you need to shut down without rebooting type "sudo shutdown -h now"
 
 log in with the default username / password, which is pi / raspberry
 
@@ -182,7 +182,7 @@ sudo apt-get install libopencv-dev python-opencv
 
 python
 >>> import cv2
->>> cv2.__version__        # will say "2.4.1" if pre-compiled binary installation was successful
+>>> cv2.__version__        # will say "2.4.9" if pre-compiled binary installation was successful
 
 Note that if you use these old pre-compiled binaries the OpenCV Python programs used in this tutorial will NOT work since they have been written for OpenCV 3.
 
@@ -245,6 +245,9 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 -D BUILD_EXAMPLES=ON \
 -D CMAKE_INSTALL_PREFIX=/usr/local \
 -D WITH_V4L=ON ..
+
+# The next command, make, takes about 3 hours and pushes the RPi to the limits of what it is capable of, and as a result the RPi will get noticeably warm
+# To prevent overheating, it would be best to remove the top of the case and perch the RPi on a small metal object to facilitate air circulation and heat dissipation
 
 sudo make            # this takes about 3 hours on the RPi 2
 

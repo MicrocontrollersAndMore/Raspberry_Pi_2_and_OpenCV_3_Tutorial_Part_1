@@ -2,7 +2,7 @@ Welcome to the Raspberry Pi 2 & OpenCV 3 Tutorial - Part 1 !!
 
 If you are unsure where to start I would recommend viewing the video from the beginning and working through "Raspberry Pi 2 + OpenCV 3 Cheat Sheet.txt" to follow along.  The video covers pretty much everything in detail:
 
-(video link here when done)
+https://www.youtube.com/watch?v=6j-Wy9j0TCs
 
 Note 1: This cheat sheet is intended to be used in conjunction with the above linked YouTube video, NOT necessarily as a standalone document.  If you are unable to follow this cheat sheet at some point please consult the video, all steps are explained and demonstrated.
 
